@@ -31,7 +31,7 @@ docker-compose up -d --build
 
 4. Пользуясь приложением DataGrip (https://www.jetbrains.com/ru-ru/datagrip/download/), инициализировать БД:
 Для этого заходим в DataGrip Файл -> новый проект, (+) -> добавить источник -> PostgreSQL -> заполняем поля, как показано ниже:
-![DataGrip](./servise/service/dg.png)
+![DataGrip](/servise/service/dg.png)
 (поле password: postgres)
 Затем в консоле запросов выполнить следующие команды:
 ```
@@ -133,7 +133,7 @@ python manage.py migrate
 Таблица и суперюзер созданы!
 
 6. Наконец запустить скрипт:
-переместится в директорию со скриптом и запустить скрипт
+переместится в директорию со скриптом и выполнить команду
 ```
 cd service
 python main.py
