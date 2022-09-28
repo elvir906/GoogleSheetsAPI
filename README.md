@@ -31,7 +31,7 @@ docker-compose up -d --build
 
 4. Пользуясь приложением DataGrip (https://www.jetbrains.com/ru-ru/datagrip/download/), инициализировать БД:
 Для этого заходим в DataGrip Файл -> новый проект, (+) -> добавить источник -> PostgreSQL -> заполняем поля, как показано на изображении:
-![DataGrip](./servise/service/img/dg.png)
+![DataGrip](./service/service/img/dg.png)
 (поле password: postgres)
 Затем в консоле запросов выполнить следующие команды:
 ```
