@@ -33,6 +33,7 @@ docker-compose up -d --build
 Для этого заходим в DataGrip Файл -> новый проект, (+) -> добавить источник -> PostgreSQL -> заполняем поля, как показано на изображении:
 ![DataGrip](./service/service/img/dg.png)
 (поле password: postgres)
+
 Затем в консоле запросов выполнить следующие команды:
 ```
 CREATE
