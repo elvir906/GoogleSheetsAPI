@@ -31,7 +31,7 @@ docker-compose up -d --build
 
 4. Пользуясь приложением DataGrip (https://www.jetbrains.com/ru-ru/datagrip/download/), инициализировать БД:
 Для этого заходим в DataGrip Файл -> новый проект, (+) -> добавить источник -> PostgreSQL -> заполняем поля, как показано ниже:
-![DataGrip](servise/service/dg.png)
+![DataGrip](./servise/service/dg.png)
 (поле password: postgres)
 Затем в консоле запросов выполнить следующие команды:
 ```
@@ -50,7 +50,7 @@ $$
 CREATE TABLE Orders
 (
     id                        SERIAL                    NOT NULL PRIMARY KEY,
-    table_row_index           INTEGER                   NOT NULL UNIQUE,     -- номер строки в адресе вида A1:A50
+    table_row_index           INTEGER                   NOT NULL UNIQUE,     
     table_row_number          INTEGER                   NOT NULL,
     order_number              INTEGER                   NOT NULL UNIQUE,
     cost_usd                  NUMERIC(12, 2)            NOT NULL,
