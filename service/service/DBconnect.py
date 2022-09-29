@@ -29,17 +29,18 @@ def send_massge(bot, message):
 def delivery_date_checking(date):
     """Проверка истечения срока поставки."""
     delivery_date = dt.strptime(date, '%d.%m.%Y')
-    return dt.today() < delivery_date
+    return dt.today() > delivery_date
 
 
 def data_transfer():
     """
     Метод для переброски данных с листа гугл-таблицы в базу Postgres.
-    Так же здесь реализована инициализации сверки даты поставки и 
+    Так же здесь реализована инициализации сверки даты поставки и
     отправки сообщения телеграм-ботом.
     """
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     sheet = GSheets()
+    message = ''
 
     if sheet.check_changes():
         rate = GetRate().fetch_currency_rate()
@@ -58,14 +59,11 @@ def data_transfer():
             for item in reversed(range(len(sheet.get_values()))):
                 sheet_values = sheet.get_values()[item]
 
-                date_in_sheet = sheet.get_values()[0][3]
-                order_number_in_sheet = sheet.get_values()[0][1]
+                date_in_sheet = sheet_values[3]
+                order_number_in_sheet = sheet_values[1]
 
                 if delivery_date_checking(date_in_sheet):
-                    bot.send_message(
-                        TELEGRAM_CHAT_ID,
-                        f'Истёк срок поставки заказа № {order_number_in_sheet}'
-                    )
+                    message += f'№ {order_number_in_sheet} - {date_in_sheet};\n'
 
                 sheet_values.insert(3, round(rate * float(sheet_values[2]), 2))
                 query_values = [item, *sheet_values]
@@ -76,6 +74,12 @@ def data_transfer():
             connection.commit()
             count = cursor.rowcount
             print(count, 'Record inserted successfully into mobile table')
+
+            if message != '':
+                bot.send_message(
+                    TELEGRAM_CHAT_ID,
+                    'Истёк срок поставки заказа(-ов):\n' + message
+                )
 
         except (Exception, psycopg2.Error) as error:
             print('Failed to insert record into mobile table:', error)

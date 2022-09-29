@@ -1,4 +1,5 @@
 import asyncio
+import tzlocal
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -13,12 +14,18 @@ if __name__ == '__main__':
     метод data_transfer() с интервалом, указанным в переменной
     GS_POLLING_INTERVAL.
     """
-    scheduler = AsyncIOScheduler()
+    scheduler = AsyncIOScheduler(timezone=str(tzlocal.get_localzone()))
 
     async def db_data_transfer():
         data_transfer()
 
-    scheduler.add_job(db_data_transfer, "interval", minutes=GS_POLLING_INTERVAL)
+    print('Скрипт начал работу...')
+
+    scheduler.add_job(
+        db_data_transfer,
+        "interval",
+        minutes=GS_POLLING_INTERVAL
+    )
     scheduler.start()
 
     print('Press Ctrl+C to exit\n')
