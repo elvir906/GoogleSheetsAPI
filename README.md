@@ -1,4 +1,11 @@
-## Скрипт синхронизации данных с Google-таблицой в качестве источника 
+## Скрипт синхронизации данных с Google-таблицой в качестве источника
+
+[![Python](https://img.shields.io/badge/-Python-464646?style=flat-square&logo=Python)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/-Django-464646?style=flat-square&logo=Django)](https://www.djangoproject.com/)
+[![Django REST Framework](https://img.shields.io/badge/-Django%20REST%20Framework-464646?style=flat-square&logo=Django%20REST%20Framework)](https://www.django-rest-framework.org/)
+[![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-464646?style=flat-square&logo=PostgreSQL)](https://www.postgresql.org/)
+[![docker](https://img.shields.io/badge/-Docker-464646?style=flat-square&logo=docker)](https://www.docker.com/)
+[![Google Sheets API](https://img.shields.io/badge/-Google API-464646?style=flat-square&logo=Google Sheets API)](https://developers.google.com/sheets/api)
 
 Проект представляет собой связку бэкенд-приложения и БД PostgreSQL, работающих в двух запускаемых контейнерах.
 
@@ -28,10 +35,9 @@ DJ_SECRET_KEY=<секретный ключ проекта>
 docker-compose up -d --build
 ```
 
-4. Пользуясь приложением DataGrip (https://www.jetbrains.com/ru-ru/datagrip/download/), инициализировать БД:
-Для этого заходим в DataGrip Файл -> новый проект, (+) -> добавить источник -> PostgreSQL -> заполняем поля, как показано на изображении:
+4. Пользуясь приложением DataGrip (https://www.jetbrains.com/ru-ru/datagrip/download/), инициализировать БД.
+Для этого заходим в DataGrip Файл -> новый проект, (+) -> добавить источник -> PostgreSQL -> заполняем поля, как показано на изображении: (поле password: postgres)
 ![DataGrip](./service/service/img/dg.png)
-(поле password: postgres)
 
 Затем в консоле запросов выполнить следующие команды:
 ```
@@ -126,20 +132,20 @@ cd service
 python manage.py migrate
 python manage.py createsuperuser
 ```
-Придумать и ввести и запомнить данные суперюзера и снова запустить миграции
+Придумать, ввести и запомнить данные суперюзера и снова запустить миграции
 ```
 python manage.py migrate
 ```
 Таблица и суперюзер созданы!
 
-6. Наконец запустить скрипт:
-переместится в директорию со скриптом и выполнить команду
+6. Наконец запустить скрипт.
+Для этого следует переместиться в директорию со скриптом и выполнить команду запуска питон-файла
 ```
 cd service
 python main.py
 ```
 
 Скрипт запустится и каждую минуту будет отслеживать изменения. Интервал отслеживания можно изменить, изменив значение переменной
-'GS_POLLING_INTERVAL' в модуле 'googlesheet.py'. При первом вызове скрипта и при обнаружении изменений, скрипт перезапишет данные таблицы. В связи с задержкой обновления данных на стороне сервиса GoogleAPI, возможны краткосрочные задержки в обнаружении изменений в таблице.
+'GS_POLLING_INTERVAL' в модуле 'service/service/googlesheet.py'. При первом вызове скрипта и при обнаружении изменений, скрипт перезапишет данные таблицы. В связи с задержкой обновления данных на стороне сервиса GoogleAPI, возможны краткосрочные задержки в обнаружении изменений в таблице.
 
-После запуска таблица будет доступна по адресу: http://localhost:8000/api/orders или в Django-админке 
+После запуска таблица будет доступна по адресу: http://localhost:8000/api/orders или в Django-админке.
