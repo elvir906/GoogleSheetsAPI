@@ -33,13 +33,13 @@ def delivery_date_checking(date):
     return dt.today() > delivery_date
 
 
-def alredy_not_first(self):
+def alredy_not_first():
     """Для проверки, первый ли запуск."""
     with open(os.path.join(
         'secret/', 'is_it_first.json'
     ), 'w') as config_file:
         json.dump({
-            "is_it?": "False",
+            "is_it": "False",
         }, config_file)
 
 

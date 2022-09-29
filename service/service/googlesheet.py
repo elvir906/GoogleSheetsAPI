@@ -63,7 +63,6 @@ class GSheets:
                 "lastUpdate": self.last_update,
             }, config_file)
 
-
     def check_changes(self):
         """Метод проверяет то, были ли изменения в гугл-табдице."""
         self.page_token = self.start_page_token
