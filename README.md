@@ -5,7 +5,7 @@
 [![Django REST Framework](https://img.shields.io/badge/-Django%20REST%20Framework-464646?style=flat-square&logo=Django%20REST%20Framework)](https://www.django-rest-framework.org/)
 [![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-464646?style=flat-square&logo=PostgreSQL)](https://www.postgresql.org/)
 [![docker](https://img.shields.io/badge/-Docker-464646?style=flat-square&logo=docker)](https://www.docker.com/)
-[![Google Sheets API](https://img.shields.io/badge/-GoogleAPI-464646?style=flat-square&logo=GoogleSheetsAPI)](https://developers.google.com/sheets/api)
+[![GoogleAPI](https://img.shields.io/badge/-GoogleAPI-464646?style=flat-square&logo=GoogleSheetsAPI)](https://developers.google.com/sheets/api)
 
 Проект представляет собой связку бэкенд-приложения и БД PostgreSQL, работающих в двух запускаемых контейнерах.
 
