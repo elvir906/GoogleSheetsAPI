@@ -63,9 +63,6 @@ class GSheets:
                 "lastUpdate": self.last_update,
             }, config_file)
 
-    # def first(self):
-    #     response = self.drive_service.changes().getStartPageToken().execute()
-    #     print(response)
 
     def check_changes(self):
         """Метод проверяет то, были ли изменения в гугл-табдице."""

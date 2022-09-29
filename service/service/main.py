@@ -19,7 +19,7 @@ if __name__ == '__main__':
     async def db_data_transfer():
         data_transfer()
 
-    print('Скрипт начал работу...')
+    print('Starting script...')
 
     scheduler.add_job(
         db_data_transfer,

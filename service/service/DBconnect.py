@@ -1,3 +1,4 @@
+import json
 import os
 from datetime import datetime as dt
 
@@ -32,6 +33,16 @@ def delivery_date_checking(date):
     return dt.today() > delivery_date
 
 
+def alredy_not_first(self):
+    """Для проверки, первый ли запуск."""
+    with open(os.path.join(
+        'secret/', 'is_it_first.json'
+    ), 'w') as config_file:
+        json.dump({
+            "is_it?": "False",
+        }, config_file)
+
+
 def data_transfer():
     """
     Метод для переброски данных с листа гугл-таблицы в базу Postgres.
@@ -42,7 +53,16 @@ def data_transfer():
     sheet = GSheets()
     message = ''
 
-    if sheet.check_changes():
+    with open(
+        os.path.join(
+            'secret/', 'is_it_first.json'
+        ), 'r'
+    ) as config_file:
+        json_data = json.load(config_file)
+
+    is_it_first = json_data.get('is_it')
+
+    if sheet.check_changes() or is_it_first:
         rate = GetRate().fetch_currency_rate()
         query_values = []
         sheet_values = []
@@ -80,6 +100,8 @@ def data_transfer():
                     TELEGRAM_CHAT_ID,
                     'Истёк срок поставки заказа(-ов):\n' + message
                 )
+
+            alredy_not_first()
 
         except (Exception, psycopg2.Error) as error:
             print('Failed to insert record into mobile table:', error)
