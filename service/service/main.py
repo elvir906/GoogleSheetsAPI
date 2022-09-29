@@ -11,7 +11,7 @@ if __name__ == '__main__':
     """
     Здесь происходит запуск планировщика, вызывающего
     метод data_transfer() с интервалом, указанным в переменной
-    GS_POLLING_INTERVAL
+    GS_POLLING_INTERVAL.
     """
     scheduler = AsyncIOScheduler()
 

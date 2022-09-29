@@ -19,7 +19,10 @@ CREDENTIALS_FILE = 'creds.json'
 
 class GSheets:
     def __init__(self):
-        with open(os.path.join('secret/', 'gsheets_cached_config.json'), 'r') as config_file:
+        """Инициализация переменных  и данных."""
+        with open(os.path.join(
+            'secret/', 'gsheets_cached_config.json'
+        ), 'r') as config_file:
             json_data = json.load(config_file)
 
         self.spreadsheet_id = '1asMC2phmDnNOx_wBsCLLqiz7LOXHrO32zCMM5GIXUXo'
@@ -35,12 +38,12 @@ class GSheets:
         httpAuth = credentials.authorize(httplib2.Http())
 
         self.service = apiclient.discovery.build('sheets', 'v4', http=httpAuth)
-        self.drive_service = apiclient.discovery.build('drive', 'v3', http=httpAuth)
+        self.drive_service = apiclient.discovery.build(
+            'drive', 'v3', http=httpAuth
+        )
 
     def get_values(self):
-        """
-        Метод для извлечения данных с гугл-таблицы
-        """
+        """Метод для извлечения данных с гугл-таблицы."""
         values = self.service.spreadsheets().values().get(
             spreadsheetId=self.spreadsheet_id,
             range='A2:D',
@@ -49,10 +52,10 @@ class GSheets:
         return values.get('values')
 
     def dump_config(self):
-        """
-        Метод записывает данные о гугл-таблице в файл
-        """
-        with open(os.path.join('secret/', 'gsheets_cached_config.json'), 'w') as config_file:
+        """Метод записывает данные о гугл-таблице в файл."""
+        with open(os.path.join(
+            'secret/', 'gsheets_cached_config.json'
+        ), 'w') as config_file:
             json.dump({
                 "spreadsheetId": self.spreadsheet_id,
                 "mainSheetId":   self.main_sheet_id,
@@ -65,9 +68,7 @@ class GSheets:
     #     print(response)
 
     def check_changes(self):
-        """
-        Метод проверяет то, были ли изменения в гугл-табдице
-        """
+        """Метод проверяет то, были ли изменения в гугл-табдице."""
         self.page_token = self.start_page_token
         were_changes_in_a_file = False
         start_page_token = self.start_page_token
