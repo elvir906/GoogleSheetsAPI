@@ -26,10 +26,9 @@ class GSheets:
             json_data = json.load(config_file)
 
         self.spreadsheet_id = '1asMC2phmDnNOx_wBsCLLqiz7LOXHrO32zCMM5GIXUXo'
-        self.main_sheet_id = 123456
         self.start_page_token = json_data.get('startPageToken')
         self.page_token = '0'
-        self.last_update = '0'
+        self.last_update = json_data.get('lastUpdate')
 
         credentials = ServiceAccountCredentials.from_json_keyfile_name(
             CREDENTIALS_FILE,
@@ -58,20 +57,18 @@ class GSheets:
         ), 'w') as config_file:
             json.dump({
                 "spreadsheetId": self.spreadsheet_id,
-                "mainSheetId":   self.main_sheet_id,
                 "startPageToken": self.start_page_token,
                 "lastUpdate": self.last_update,
             }, config_file)
 
     def check_changes(self):
-        """Метод проверяет то, были ли изменения в гугл-табдице."""
+        """Метод проверяет, были ли изменения в гугл-табдице."""
         self.page_token = self.start_page_token
-        were_changes_in_a_file = False
         start_page_token = self.start_page_token
+        were_changes_in_a_file = False
 
         try:
             while self.page_token is not None:
-
                 response = self.drive_service.changes().list(
                     pageToken=self.page_token,
                     spaces='drive',
@@ -81,7 +78,7 @@ class GSheets:
                     file_id = change.get("fileId")
                     if file_id == self.spreadsheet_id:
                         were_changes_in_a_file = True
-                        print('Changes was found')
+                        print('Changes were found')
                 if 'newStartPageToken' in response:
                     self.start_page_token = response.get('newStartPageToken')
                 self.page_token = response.get('nextPageToken')

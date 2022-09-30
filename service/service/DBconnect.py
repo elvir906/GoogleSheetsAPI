@@ -1,4 +1,3 @@
-import json
 import os
 from datetime import datetime as dt
 
@@ -33,36 +32,17 @@ def delivery_date_checking(date):
     return dt.today() > delivery_date
 
 
-def alredy_not_first():
-    """Для проверки, первый ли запуск."""
-    with open(os.path.join(
-        'secret/', 'is_it_first.json'
-    ), 'w') as config_file:
-        json.dump({
-            "is_it": "False",
-        }, config_file)
-
-
 def data_transfer():
     """
     Метод для переброски данных с листа гугл-таблицы в базу Postgres.
     Так же здесь реализована инициализации сверки даты поставки и
     отправки сообщения телеграм-ботом.
     """
-    bot = telegram.Bot(token=TELEGRAM_TOKEN)
     sheet = GSheets()
-    message = ''
 
-    with open(
-        os.path.join(
-            'secret/', 'is_it_first.json'
-        ), 'r'
-    ) as config_file:
-        json_data = json.load(config_file)
+    if sheet.check_changes():
 
-    is_it_first = json_data.get('is_it')
-
-    if sheet.check_changes() or is_it_first:
+        message = ''
         rate = GetRate().fetch_currency_rate()
         query_values = []
         sheet_values = []
@@ -75,7 +55,9 @@ def data_transfer():
                 port=5432
             )
             cursor = connection.cursor()
+            count = 0
             cursor.execute('TRUNCATE Orders')
+
             for item in reversed(range(len(sheet.get_values()))):
                 sheet_values = sheet.get_values()[item]
 
@@ -90,18 +72,16 @@ def data_transfer():
                 query = 'INSERT INTO Orders (table_row_index, table_row_number, order_number, cost_usd, cost_rub, delivery_date) VALUES (%s, %s, %s, %s, %s, %s)'
                 db_values = tuple(query_values)
                 cursor.execute(query, db_values)
+                count += cursor.rowcount
 
             connection.commit()
-            count = cursor.rowcount
             print(count, 'Record inserted successfully into mobile table')
 
             if message != '':
-                bot.send_message(
-                    TELEGRAM_CHAT_ID,
+                send_massge(
+                    telegram.Bot(token=TELEGRAM_TOKEN),
                     'Истёк срок поставки заказа(-ов):\n' + message
                 )
-
-            alredy_not_first()
 
         except (Exception, psycopg2.Error) as error:
             print('Failed to insert record into mobile table:', error)
@@ -112,4 +92,4 @@ def data_transfer():
                 connection.close()
                 print('PostgreSQL connection is closed')
     else:
-        print('No changes was found')
+        print('No changes were found')
