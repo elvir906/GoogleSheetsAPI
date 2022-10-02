@@ -4,7 +4,6 @@ from datetime import datetime as dt
 import psycopg2
 import telegram
 
-from bool_values import read_value, writing_false_value
 from googlesheet import GSheets
 from rubrate import GetRate
 from settings import DATABASES
@@ -13,7 +12,6 @@ DB_NAME = DATABASES.get('default').get('NAME')
 USER = DATABASES.get('default').get('USER')
 PASSWORD = DATABASES.get('default').get('PASSWORD')
 HOST = DATABASES.get('default').get('HOST')
-# HOST = 'localhost'
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
