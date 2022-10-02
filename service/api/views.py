@@ -7,5 +7,5 @@ from api.serializers import OrdersSerializer
 
 @api_view()
 def get_chunk(request):
-    entries = Orders.objects.all()
-    return Response(OrdersSerializer(entries, many=True).data)
+    queryset = Orders.objects.all()
+    return Response(OrdersSerializer(queryset, many=True).data)
