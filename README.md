@@ -139,8 +139,8 @@ cd service
 python manage.py migrate
 python manage.py createsuperuser
 ```
-Придумать, ввести и запомнить данные суперюзера.
-```
+Придумать, ввести данные суперюзера.
+
 Таблица и суперюзер созданы!
 
 
