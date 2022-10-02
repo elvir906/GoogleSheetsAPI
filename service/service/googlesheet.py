@@ -27,7 +27,7 @@ class GSheets:
 
         self.spreadsheet_id = '1asMC2phmDnNOx_wBsCLLqiz7LOXHrO32zCMM5GIXUXo'
         self.start_page_token = json_data.get('startPageToken')
-        self.page_token = '0'
+        self.page_token = json_data.get('startPageToken')
         self.last_update = json_data.get('lastUpdate')
 
         credentials = ServiceAccountCredentials.from_json_keyfile_name(
@@ -78,7 +78,7 @@ class GSheets:
                     file_id = change.get("fileId")
                     if file_id == self.spreadsheet_id:
                         were_changes_in_a_file = True
-                        print('Changes were found')
+                        print('Найдены изменения в файле')
                 if 'newStartPageToken' in response:
                     self.start_page_token = response.get('newStartPageToken')
                 self.page_token = response.get('nextPageToken')
@@ -87,7 +87,7 @@ class GSheets:
                 self.last_update = f'{datetime.now():%X %d.%m.%Y}'
                 self.dump_config()
 
-        except Exception as e:
-            print(f'GSheets error: unable to fetch {self.spreadsheet_id} table with Google Sheets API:', e)
+        except Exception as error:
+            print(f'GSheets error: unable to fetch {self.spreadsheet_id} table with Google Sheets API:', error)
         finally:
             return were_changes_in_a_file

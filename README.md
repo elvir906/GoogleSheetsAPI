@@ -75,8 +75,7 @@ CREATE TRIGGER set_timestamp
     ON Orders
     FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
-```
-```
+
 INSERT INTO Orders(
   table_row_index,
   table_row_number,
@@ -90,8 +89,7 @@ INSERT INTO Orders(
   18000::NUMERIC(12, 2), -- приведение типа
   '04.07.2022'::char(10) -- приведение типа
 );
-```
-```
+
 CREATE
     OR REPLACE FUNCTION upsert_orders(
         arg_table_row_index INTEGER,

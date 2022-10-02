@@ -32,7 +32,7 @@ class GetRate:
 
             if cbr_response.get('status') != '200':
                 print(
-                    'Error fetching currency from http://www.cbr.ru/ :\n\t',
+                    'Возникла ошибка при извлечении данных с ресурса http://www.cbr.ru/ :\n\t',
                     cbr_response_s
                 )
 
@@ -46,11 +46,11 @@ class GetRate:
                 nominal = cbr_response_s[start_nominal_idx: end_nominal_idx]
                 self.currency_rate = atof(currency_rate.replace(',', '.')) / atof(nominal.replace(',', '.'))
             except ValueError:
-                print(f'Error: unable to fetch {VALUTE_CHAR_CODE} currency rate. The CBR API has changed')
+                print(f'Ошибка: невозможно извлечь данные курса валюты {VALUTE_CHAR_CODE}. API ресурса изменён')
 
         except Exception as e:
             print(
-                f'Error: unable to fetch {VALUTE_CHAR_CODE} currency rate:',
+                f'Ошибка: невозможно извлечь данные курса валюты {VALUTE_CHAR_CODE}:',
                 e
             )
         finally:

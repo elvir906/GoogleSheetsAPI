@@ -1,10 +1,10 @@
 import asyncio
-import tzlocal
 
+import tzlocal
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-from DBconnect import data_transfer
-from on_strart import firstly_data_transfer
+from bool_values import read_value, writing_false_value
+from DBconnect import check_and_transfer, data_transfer
 
 GS_POLLING_INTERVAL = 1
 
@@ -12,17 +12,19 @@ GS_POLLING_INTERVAL = 1
 if __name__ == '__main__':
     """
     Здесь происходит запуск планировщика, вызывающего
-    метод data_transfer() с интервалом, указанным в переменной
+    метод check_and_transfer() с интервалом, указанным в переменной
     GS_POLLING_INTERVAL.
     """
-    firstly_data_transfer()
+    print('Скрипт начал свою работу. Для выхода нажмите Ctrl+C.')
 
     scheduler = AsyncIOScheduler(timezone=str(tzlocal.get_localzone()))
 
-    async def db_data_transfer():
+    if read_value():
         data_transfer()
+        writing_false_value()
 
-    print('Starting script...')
+    async def db_data_transfer():
+        check_and_transfer()
 
     scheduler.add_job(
         db_data_transfer,
@@ -30,8 +32,6 @@ if __name__ == '__main__':
         minutes=GS_POLLING_INTERVAL
     )
     scheduler.start()
-
-    print('Press Ctrl+C to exit\n')
 
     try:
         asyncio.get_event_loop().run_forever()
