@@ -1,6 +1,6 @@
 ## Скрипт синхронизации данных с Google-таблицой в качестве источника
 
-Гугл таблица https://docs.google.com/spreadsheets/d/1asMC2phmDnNOx_wBsCLLqiz7LOXHrO32zCMM5GIXUXo/edit#gid=0
+Гугл таблица https://docs.google.com/spreadsheets/d/1asMC2phmDnNOx_wBsCLLqiz7LOXHrO32zCMM5GIXUXo/
 
 [![Python](https://img.shields.io/badge/-Python-464646?style=flat-square&logo=Python)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/-Django-464646?style=flat-square&logo=Django)](https://www.djangoproject.com/)
