@@ -2,7 +2,6 @@ import asyncio
 
 import tzlocal
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-
 from bool_values import read_value, writing_false_value
 from DBconnect import check_and_transfer, data_transfer
 
